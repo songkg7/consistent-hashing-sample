@@ -4,7 +4,6 @@ import com.example.consistenthasingsample.hash.HashAlgorithm;
 import com.example.consistenthasingsample.hash.Node;
 import com.example.consistenthasingsample.hash.SHA256Hash;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,11 +11,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SimpleHashRouter<T extends Node> implements HashRouter<T> {
 
     private final HashAlgorithm hashAlgorithm;
-    private final Map<Long, T> cache = new ConcurrentHashMap<>();
     private final List<T> nodes;
 
-    private long cacheHit = 0;
-    private long cacheMiss = 0;
 
     public SimpleHashRouter(List<T> nodes) {
         this.hashAlgorithm = new SHA256Hash();
@@ -28,40 +24,23 @@ public class SimpleHashRouter<T extends Node> implements HashRouter<T> {
         this.nodes = nodes;
     }
 
+    public List<T> getNodes() {
+        return nodes;
+    }
+
     @Override
     public T routeNode(String key) {
         long hash = this.hashAlgorithm.hash(key);
-        T node = cache.getOrDefault(hash, null);
-        if (node == null) {
-            cacheMiss++;
-            int index = (int) (hash % nodes.size());
-            cache.put(hash, nodes.get(index));
-            return nodes.get(index);
-        } else {
-            cacheHit++;
-            return node;
-        }
+        int index = (int) (hash % nodes.size());
+        return nodes.get(index);
     }
 
-    // NOTE: 예제를 위해 다소 억지스럽게 구현
     public void removeNode(T node) {
-        cache.keySet().stream()
-                .filter(key -> cache.get(key).equals(node))
-                .forEach(cache::remove);
         nodes.remove(node);
     }
 
-    public long getCacheHit() {
-        return cacheHit;
+    public void addNode(T node) {
+        nodes.add(node);
     }
 
-    public long getCacheMiss() {
-        return cacheMiss;
-    }
-
-    public void clearCache() {
-        cache.clear();
-        cacheHit = 0;
-        cacheMiss = 0;
-    }
 }

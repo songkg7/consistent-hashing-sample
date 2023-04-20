@@ -1,21 +1,13 @@
 package com.example.consistenthasingsample.hash;
 
-import java.util.*;
+import java.util.Objects;
 
-public class ServiceNode implements Node {
+public class ServiceNode extends CacheNode {
+
     private final String ip;
-    private final Map<String, String> cache = new HashMap<>();
 
     public ServiceNode(String ip) {
         this.ip = ip;
-    }
-
-    public void save(String data) {
-        cache.put(data, data);
-    }
-
-    public String get(String data) {
-        return cache.get(data);
     }
 
     @Override
@@ -42,4 +34,5 @@ public class ServiceNode implements Node {
                 "ip='" + ip + '\'' +
                 '}';
     }
+
 }

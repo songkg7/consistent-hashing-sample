@@ -13,10 +13,6 @@ public class ConsistentHashRouter<T extends Node> implements HashRouter<T> {
 
     private final SortedMap<Long, VirtualNode<T>> ring = new TreeMap<>();
 
-    public SortedMap<Long, VirtualNode<T>> getRing() {
-        return ring;
-    }
-
     public ConsistentHashRouter(Collection<T> physicalNodes, Integer virtualNodeCount) {
         this(physicalNodes, virtualNodeCount, new SHA256Hash());
     }
@@ -26,6 +22,10 @@ public class ConsistentHashRouter<T extends Node> implements HashRouter<T> {
         for (T physicalNode : physicalNodes) {
             addNode(physicalNode, virtualNodeCount);
         }
+    }
+
+    public SortedMap<Long, VirtualNode<T>> getRing() {
+        return ring;
     }
 
     @Override
