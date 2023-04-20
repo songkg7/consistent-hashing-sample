@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SimpleHashRouter<T extends Node> implements HashRouter<T> {
 
     private final HashAlgorithm hashAlgorithm;
-    private final Map<Long, T> cache = new HashMap<>();
+    private final Map<Long, T> cache = new ConcurrentHashMap<>();
     private final List<T> nodes;
 
     private long cacheHit = 0;
@@ -43,7 +43,11 @@ public class SimpleHashRouter<T extends Node> implements HashRouter<T> {
         }
     }
 
+    // NOTE: 예제를 위해 다소 억지스럽게 구현
     public void removeNode(T node) {
+        cache.keySet().stream()
+                .filter(key -> cache.get(key).equals(node))
+                .forEach(cache::remove);
         nodes.remove(node);
     }
 

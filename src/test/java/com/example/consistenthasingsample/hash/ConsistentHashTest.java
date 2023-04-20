@@ -101,7 +101,9 @@ class ConsistentHashTest {
         System.out.println("cacheMiss: " + hashRouter.getCacheMiss());
         assertThat(hashRouter.getCacheHit()).isLessThan(hashRouter.getCacheMiss());
 
+        // node 가 제거 된다면 해당 노드의 데이터를 다른 노드로 분배해야 한다.
         hashRouter.removeNode(new ServiceNode("192.168.0.1"));
+        hashRouter.removeNode(new ServiceNode("192.168.0.2"));
 
         Map<Node, Long> afterCacheResult = traffics.stream()
                 .map(hashRouter::routeNode)

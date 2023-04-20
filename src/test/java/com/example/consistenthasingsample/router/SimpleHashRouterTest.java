@@ -46,4 +46,17 @@ class SimpleHashRouterTest {
         assertThat(router.getCacheMiss()).isEqualTo(2);
         assertThat(cachedNode).isNotEqualTo(node);
     }
+
+    @Test
+    @DisplayName("node 삭제로 인한 캐시 미스")
+    void removeNode() {
+        ServiceNode node = router.routeNode("1");
+        assertThat(router.getCacheMiss()).isEqualTo(1);
+        assertThat(node).isNotNull();
+
+        router.removeNode(new ServiceNode("192.168.0.2"));
+        ServiceNode cachedNode = router.routeNode("1");
+        assertThat(router.getCacheMiss()).isEqualTo(2);
+        assertThat(cachedNode).isNotEqualTo(node);
+    }
 }
