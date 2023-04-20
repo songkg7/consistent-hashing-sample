@@ -19,17 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ConsistentHashTest {
 
     private final FixtureMonkey fixture = FixtureMonkey.create();
-    private SimpleHashRouter<CacheNode> hashRouter;
-
-    @BeforeEach
-    void setUp() {
-        List<CacheNode> nodes = new ArrayList<>();
-        nodes.add(new ServiceNode("192.168.0.1"));
-        nodes.add(new ServiceNode("192.168.0.2"));
-        nodes.add(new ServiceNode("192.168.0.3"));
-        nodes.add(new ServiceNode("192.168.0.4"));
-        hashRouter = new SimpleHashRouter<>(nodes);
-    }
 
     @Test
     @DisplayName("데이터의 수가 적은 경우는 별 의미가 없다.")
@@ -52,8 +41,16 @@ class ConsistentHashTest {
     @Test
     @DisplayName("랜덤 데이터를 해시, 간단한 해시 함수여도 비교적 균등하게 분산된다.")
     void hash2() {
+        // given
+        List<CacheNode> nodes = new ArrayList<>();
+        nodes.add(new ServiceNode("192.168.0.1"));
+        nodes.add(new ServiceNode("192.168.0.2"));
+        nodes.add(new ServiceNode("192.168.0.3"));
+        nodes.add(new ServiceNode("192.168.0.4"));
+        SimpleHashRouter<CacheNode> hashRouter = new SimpleHashRouter<>(nodes);
         var traffics = fixture.giveMe(String.class, 1_000_000);
 
+        // when
         for (String traffic : traffics) {
             CacheNode node = hashRouter.routeNode(traffic);
             node.findInCache(traffic);
@@ -80,8 +77,16 @@ class ConsistentHashTest {
     @Test
     @DisplayName("하지만 node 목록이 변하면 대부분의 트래픽이 기존과는 다른 노드를 향한다. 결국 많은 캐시 미스가 발생한다.")
     void hash3() {
+        // given
+        List<CacheNode> nodes = new ArrayList<>();
+        nodes.add(new ServiceNode("192.168.0.1"));
+        nodes.add(new ServiceNode("192.168.0.2"));
+        nodes.add(new ServiceNode("192.168.0.3"));
+        nodes.add(new ServiceNode("192.168.0.4"));
+        SimpleHashRouter<CacheNode> hashRouter = new SimpleHashRouter<>(nodes);
         var traffics = fixture.giveMe(String.class, 1_000_000);
 
+        // when
         for (String traffic : traffics) {
             CacheNode node = hashRouter.routeNode(traffic);
             node.findInCache(traffic);
@@ -90,7 +95,6 @@ class ConsistentHashTest {
 
         // node 가 제거된다면 제거된 노드로 분배되던 트래픽은 대부분 cache miss 가 발생한다.
         hashRouter.removeNode(new ServiceNode("192.168.0.1"));
-        hashRouter.removeNode(new ServiceNode("192.168.0.2"));
 
         for (String traffic : traffics) {
             CacheNode node = hashRouter.routeNode(traffic);
@@ -102,28 +106,33 @@ class ConsistentHashTest {
     @Test
     @DisplayName("그렇다면 Consistent Hashing 을 사용하면 어떨까?")
     void hash4() {
-        List<Node> nodes = new ArrayList<>();
+        // given
         // 4개의 물리적 노드
+        List<CacheNode> nodes = new ArrayList<>();
         nodes.add(new ServiceNode("192.168.0.1"));
         nodes.add(new ServiceNode("192.168.0.2"));
         nodes.add(new ServiceNode("192.168.0.3"));
         nodes.add(new ServiceNode("192.168.0.4"));
 
-        ConsistentHashRouter<Node> consistentHashRouter = new ConsistentHashRouter<>(nodes, 1);
+        ConsistentHashRouter<CacheNode> consistentHashRouter = new ConsistentHashRouter<>(nodes, 100);
+
+        // when
+        // 1_000_000 개의 트래픽 최초 분배
         List<String> traffics = fixture.giveMe(String.class, 1_000_000);
+        for (String traffic : traffics) {
+            CacheNode node = consistentHashRouter.routeNode(traffic);
+            node.findInCache(traffic);
+        }
+        printNodeStatus(nodes);
 
-        traffics.stream()
-                .map(consistentHashRouter::routeNode)
-                .collect(groupingBy(Node::getKey, counting()));
-
-        Node node = consistentHashRouter.routeNode("5");
-        System.out.println(node.getKey());
-
-
-        // ring 에는 물리적 노드의 키가 아니라 가상 노드의 키로 구성되어 있다.
-        SortedMap<Long, VirtualNode<Node>> ring = consistentHashRouter.getRing();
-
-        assertThat(node).isNotNull();
+        // node 가 제거된다면?
+        consistentHashRouter.removeNode(new ServiceNode("192.168.0.1"));
+        // 다시 들어오는 1_000_000 개의 트래픽 분배
+        for (String traffic : traffics) {
+            CacheNode node = consistentHashRouter.routeNode(traffic);
+            node.findInCache(traffic);
+        }
+        printNodeStatus(nodes);
     }
 
 }
