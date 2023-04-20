@@ -3,6 +3,7 @@ package com.example.consistenthasingsample.hash;
 import com.example.consistenthasingsample.router.ConsistentHashRouter;
 import com.example.consistenthasingsample.router.SimpleHashRouter;
 import com.navercorp.fixturemonkey.FixtureMonkey;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -79,20 +80,38 @@ class ConsistentHashTest {
     }
 
     @Test
-    @DisplayName("하지만 서버의 카운트가 변하면 대부분의 데이터가 재분배된다. 결국 많은 캐시 미스가 발생한다.")
+    @Disabled("cache 저장소가 Router 객체 내에 존재하기 때문에 node 를 제거해도 무조건 cache 가 hit 된다.")
+    @DisplayName("하지만 node 목록이 변하면 대부분의 데이터가 재분배된다. 결국 많은 캐시 미스가 발생한다.")
     void hash3() {
-        int serverCount = 4;
         List<String> traffics = fixture.giveMe(String.class, 1_000_000);
 
-        // when
-        var hashes = traffics.stream()
-                .map(Object::hashCode)
-                .map(Math::abs)
-                .map(v -> v % serverCount) // 0, 1, 2, 3, 4(x)
+        List<Node> nodes = new ArrayList<>();
+        nodes.add(new ServiceNode("192.168.0.1"));
+        nodes.add(new ServiceNode("192.168.0.2"));
+        nodes.add(new ServiceNode("192.168.0.3"));
+        nodes.add(new ServiceNode("192.168.0.4"));
+
+        SimpleHashRouter<Node> hashRouter = new SimpleHashRouter<>(nodes);
+
+        Map<Node, Long> beforeCacheResult = traffics.stream()
+                .map(hashRouter::routeNode)
+                .collect(groupingBy(identity(), counting()));
+        System.out.println(beforeCacheResult);
+        System.out.println("cacheHit: " + hashRouter.getCacheHit());
+        System.out.println("cacheMiss: " + hashRouter.getCacheMiss());
+        assertThat(hashRouter.getCacheHit()).isLessThan(hashRouter.getCacheMiss());
+
+        hashRouter.removeNode(new ServiceNode("192.168.0.1"));
+
+        Map<Node, Long> afterCacheResult = traffics.stream()
+                .map(hashRouter::routeNode)
                 .collect(groupingBy(identity(), counting()));
 
-        // then
-        System.out.println(hashes);
+        System.out.println(afterCacheResult);
+        System.out.println("cacheHit: " + hashRouter.getCacheHit());
+        System.out.println("cacheMiss: " + hashRouter.getCacheMiss());
+
+        assertThat(hashRouter.getCacheHit()).isLessThan(hashRouter.getCacheMiss());
     }
 
     @Test

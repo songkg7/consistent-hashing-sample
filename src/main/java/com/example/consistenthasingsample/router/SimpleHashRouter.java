@@ -43,6 +43,10 @@ public class SimpleHashRouter<T extends Node> implements HashRouter<T> {
         }
     }
 
+    public void removeNode(T node) {
+        nodes.remove(node);
+    }
+
     public long getCacheHit() {
         return cacheHit;
     }
