@@ -4,7 +4,7 @@ public class VirtualNode<T extends Node> implements Node {
 
     private final T physicalNode;
 
-    final Integer replicaIndex;
+    private final Integer replicaIndex;
 
     public VirtualNode(T physicalNode, Integer replicaIndex) {
         this.physicalNode = physicalNode;
@@ -22,6 +22,10 @@ public class VirtualNode<T extends Node> implements Node {
 
     public T getPhysicalNode() {
         return this.physicalNode;
+    }
+
+    public Integer getReplicaIndex() {
+        return this.replicaIndex;
     }
 
 }

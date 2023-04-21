@@ -13,7 +13,7 @@ class VirtualNodeTest {
         Node expectedPhysicalNode = actualVirtualNode.getPhysicalNode();
 
         assertThat(actualVirtualNode.getPhysicalNode()).isEqualTo(expectedPhysicalNode);
-        assertThat(actualVirtualNode.replicaIndex).isEqualTo(1);
+        assertThat(actualVirtualNode.getReplicaIndex()).isEqualTo(1);
     }
 
     @Test
