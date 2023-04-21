@@ -91,7 +91,6 @@ class ConsistentHashTest {
         }
         printNodeStatus(hashRouter.getNodes());
 
-        // node 가 제거된다면 제거된 노드로 분배되던 트래픽은 대부분 cache miss 가 발생한다.
         hashRouter.removeNode(new ServiceNode("192.168.0.1"));
 
         for (String traffic : traffics) {

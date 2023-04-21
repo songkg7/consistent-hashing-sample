@@ -37,7 +37,6 @@ public class ConsistentHashRouter<T extends Node> implements HashRouter<T> {
             return null;
         }
         Long hashOfBusinessKey = this.hashAlgorithm.hash(businessKey);
-        // SortedMap 은 정렬되어 있기 때문에 tailMap 을 통해 hashOfBusinessKey 보다 큰 값들을 가져올 수 있다.
         SortedMap<Long, VirtualNode<T>> biggerTailMap = ring.tailMap(hashOfBusinessKey);
         Long nodeHash;
         if (biggerTailMap.isEmpty()) {
