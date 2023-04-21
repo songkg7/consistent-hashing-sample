@@ -1,7 +1,7 @@
-package com.example.consistenthasingsample.hash;
+package com.example.consistenthashingsample.hash;
 
-import com.example.consistenthasingsample.router.ConsistentHashRouter;
-import com.example.consistenthasingsample.router.SimpleHashRouter;
+import com.example.consistenthashingsample.router.ConsistentHashRouter;
+import com.example.consistenthashingsample.router.SimpleHashRouter;
 import com.navercorp.fixturemonkey.FixtureMonkey;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

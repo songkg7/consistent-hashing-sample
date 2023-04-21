@@ -1,8 +1,8 @@
-package com.example.consistenthasingsample.router;
+package com.example.consistenthashingsample.router;
 
-import com.example.consistenthasingsample.hash.HashAlgorithm;
-import com.example.consistenthasingsample.hash.MD5Hash;
-import com.example.consistenthasingsample.hash.Node;
+import com.example.consistenthashingsample.hash.HashAlgorithm;
+import com.example.consistenthashingsample.hash.MD5Hash;
+import com.example.consistenthashingsample.hash.Node;
 
 import java.util.List;
 

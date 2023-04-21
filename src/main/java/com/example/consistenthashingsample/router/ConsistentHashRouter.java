@@ -1,9 +1,9 @@
-package com.example.consistenthasingsample.router;
+package com.example.consistenthashingsample.router;
 
-import com.example.consistenthasingsample.hash.HashAlgorithm;
-import com.example.consistenthasingsample.hash.Node;
-import com.example.consistenthasingsample.hash.SHA256Hash;
-import com.example.consistenthasingsample.hash.VirtualNode;
+import com.example.consistenthashingsample.hash.HashAlgorithm;
+import com.example.consistenthashingsample.hash.Node;
+import com.example.consistenthashingsample.hash.SHA256Hash;
+import com.example.consistenthashingsample.hash.VirtualNode;
 
 import java.util.Collection;
 import java.util.Iterator;

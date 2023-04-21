@@ -1,6 +1,6 @@
-package com.example.consistenthasingsample.router;
+package com.example.consistenthashingsample.router;
 
-import com.example.consistenthasingsample.hash.ServiceNode;
+import com.example.consistenthashingsample.hash.ServiceNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

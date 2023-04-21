@@ -1,4 +1,4 @@
-package com.example.consistenthasingsample.hash;
+package com.example.consistenthashingsample.hash;
 
 import org.junit.jupiter.api.Test;
 

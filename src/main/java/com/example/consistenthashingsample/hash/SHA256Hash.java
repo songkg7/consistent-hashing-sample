@@ -1,4 +1,4 @@
-package com.example.consistenthasingsample.hash;
+package com.example.consistenthashingsample.hash;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

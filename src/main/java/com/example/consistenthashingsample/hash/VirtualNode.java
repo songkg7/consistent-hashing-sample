@@ -1,4 +1,4 @@
-package com.example.consistenthasingsample.hash;
+package com.example.consistenthashingsample.hash;
 
 public class VirtualNode<T extends Node> implements Node {
 

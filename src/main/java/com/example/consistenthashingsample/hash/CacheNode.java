@@ -1,4 +1,4 @@
-package com.example.consistenthasingsample.hash;
+package com.example.consistenthashingsample.hash;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,10 +15,9 @@ public abstract class CacheNode implements Node {
         if (cache.containsKey(hash)) {
             cacheHit++;
             return cache.get(hash);
-        } else {
-            cacheMiss++;
-            cache.put(hash, data);
         }
+        cacheMiss++;
+        cache.put(hash, data);
         return null;
     }
 
