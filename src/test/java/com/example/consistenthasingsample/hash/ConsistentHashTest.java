@@ -114,7 +114,10 @@ class ConsistentHashTest {
         nodes.add(new ServiceNode("192.168.0.3"));
         nodes.add(new ServiceNode("192.168.0.4"));
 
-        ConsistentHashRouter<CacheNode> consistentHashRouter = new ConsistentHashRouter<>(nodes, 100);
+        // n 개의 가상 노드
+        int virtualNodeCount = 10;
+
+        ConsistentHashRouter<CacheNode> consistentHashRouter = new ConsistentHashRouter<>(nodes, virtualNodeCount);
 
         // when
         // 1_000_000 개의 트래픽 최초 분배
