@@ -10,7 +10,7 @@ class VirtualNodeTest {
     void testConstructor() {
         VirtualNode<Node> actualVirtualNode = new VirtualNode<>(mock(Node.class), 1);
 
-        Node expectedPhysicalNode = actualVirtualNode.physicalNode;
+        Node expectedPhysicalNode = actualVirtualNode.getPhysicalNode();
 
         assertThat(actualVirtualNode.getPhysicalNode()).isEqualTo(expectedPhysicalNode);
         assertThat(actualVirtualNode.replicaIndex).isEqualTo(1);

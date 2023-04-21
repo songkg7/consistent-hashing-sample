@@ -1,14 +1,8 @@
 package com.example.consistenthasingsample.hash;
 
-import java.io.Serial;
-import java.io.Serializable;
+public class VirtualNode<T extends Node> implements Node {
 
-public class VirtualNode<T extends Node> implements Node, Serializable {
-
-    @Serial
-    private static final long serialVersionUID = -1066173071509622053L;
-
-    final T physicalNode; // NOSONAR
+    private final T physicalNode;
 
     final Integer replicaIndex;
 
