@@ -2,7 +2,6 @@ package com.example.consistenthasingsample.router;
 
 import com.example.consistenthasingsample.hash.Node;
 import com.example.consistenthasingsample.hash.VirtualNode;
-import com.example.consistenthasingsample.router.ConsistentHashRouter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +10,6 @@ import java.util.List;
 import java.util.SortedMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertSame;
 
 class ConsistentHashRouterTest {
 

@@ -20,7 +20,7 @@ public class SHA256Hash implements HashAlgorithm {
             instance.update(key.getBytes());
             byte[] digest = instance.digest();
             long h = 0;
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 8; i++) {
                 h <<= 8;
                 h |= (digest[i]) & 0xFF;
             }

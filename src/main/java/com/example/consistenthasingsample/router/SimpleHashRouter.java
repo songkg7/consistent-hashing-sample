@@ -1,12 +1,10 @@
 package com.example.consistenthasingsample.router;
 
 import com.example.consistenthasingsample.hash.HashAlgorithm;
+import com.example.consistenthasingsample.hash.MD5Hash;
 import com.example.consistenthasingsample.hash.Node;
-import com.example.consistenthasingsample.hash.SHA256Hash;
 
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class SimpleHashRouter<T extends Node> implements HashRouter<T> {
 
@@ -15,7 +13,7 @@ public class SimpleHashRouter<T extends Node> implements HashRouter<T> {
 
 
     public SimpleHashRouter(List<T> nodes) {
-        this.hashAlgorithm = new SHA256Hash();
+        this.hashAlgorithm = new MD5Hash();
         this.nodes = nodes;
     }
 

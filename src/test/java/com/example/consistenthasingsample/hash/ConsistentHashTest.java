@@ -3,13 +3,11 @@ package com.example.consistenthasingsample.hash;
 import com.example.consistenthasingsample.router.ConsistentHashRouter;
 import com.example.consistenthasingsample.router.SimpleHashRouter;
 import com.navercorp.fixturemonkey.FixtureMonkey;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedMap;
 
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.counting;
