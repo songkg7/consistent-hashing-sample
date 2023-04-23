@@ -1,9 +1,6 @@
 package com.example.consistenthashingsample.router;
 
-import com.example.consistenthashingsample.hash.HashAlgorithm;
-import com.example.consistenthashingsample.hash.Node;
-import com.example.consistenthashingsample.hash.SHA256Hash;
-import com.example.consistenthashingsample.hash.VirtualNode;
+import com.example.consistenthashingsample.hash.*;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -17,7 +14,7 @@ public class ConsistentHashRouter<T extends Node> implements HashRouter<T> {
     private final SortedMap<Long, VirtualNode<T>> ring = new TreeMap<>();
 
     public ConsistentHashRouter(Collection<T> physicalNodes, Integer virtualNodeCount) {
-        this(physicalNodes, virtualNodeCount, new SHA256Hash());
+        this(physicalNodes, virtualNodeCount, new MD5Hash());
     }
 
     public ConsistentHashRouter(Collection<T> physicalNodes, Integer virtualNodeCount, HashAlgorithm hashAlgorithmImpl) {

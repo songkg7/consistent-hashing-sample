@@ -22,7 +22,7 @@ public class SHA256Hash implements HashAlgorithm {
             long h = 0;
             for (int i = 0; i < 8; i++) {
                 h <<= 8;
-                h |= (digest[i]) & 0xFF;
+                h |= (digest[i]) & 0xFFFF;
             }
             return h;
         }
