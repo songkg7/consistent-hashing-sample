@@ -12,4 +12,4 @@ Consistent hashing is a special kind of hashing such that when a hash table is r
 
 ### Consistent Hash Router
 
-<img width="1233" alt="Screenshot 2023-05-01 오후 7 29 32" src="https://user-images.githubusercontent.com/56438906/235440962-1bff01b3-e0a5-4914-a032-ca89a25f860e.png">
+<img width="1233" alt="Screenshot 2023-05-01 오후 7 36 47" src="https://user-images.githubusercontent.com/56438906/235441574-fdda9ae8-b40b-4949-a174-f68078e7629b.png">
